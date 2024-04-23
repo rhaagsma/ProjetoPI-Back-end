@@ -2,7 +2,7 @@ package com.example.springboot.controllers;
 
 import com.example.springboot.dtos.projetoRecordDto;
 import com.example.springboot.models.projetoModel;
-import com.example.springboot.repositories.projetoRepository;
+import com.example.springboot.repositories.ProjetoRepository;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class projetoController {
 
     @Autowired
-    projetoRepository projetoRepository;
+    ProjetoRepository projetoRepository;
 
     @PostMapping("/projetos")
     public ResponseEntity<projetoModel> saveProjeto(@RequestBody @Valid projetoRecordDto projetoRecordDto){

@@ -1,11 +1,11 @@
 package com.example.springboot.repositories;
 
-import com.example.springboot.models.categoriaModel;
+import com.example.springboot.models.projetoModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface categoriaRepository extends JpaRepository<categoriaModel, UUID> {
+public interface ProjetoRepository extends JpaRepository<projetoModel, UUID> {
 }

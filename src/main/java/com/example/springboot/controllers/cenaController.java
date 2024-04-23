@@ -2,7 +2,7 @@ package com.example.springboot.controllers;
 
 import com.example.springboot.dtos.cenaRecordDto;
 import com.example.springboot.models.cenaModel;
-import com.example.springboot.repositories.cenaRepository;
+import com.example.springboot.repositories.CenaRepository;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class cenaController {
 
     @Autowired
-    cenaRepository cenaRepository;
+    CenaRepository cenaRepository;
 
     @PostMapping("/cenas")
     public ResponseEntity<cenaModel> saveCena(@RequestBody @Valid cenaRecordDto cenaRecordDto){

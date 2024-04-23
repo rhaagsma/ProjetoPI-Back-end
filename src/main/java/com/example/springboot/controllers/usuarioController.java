@@ -2,8 +2,8 @@ package com.example.springboot.controllers;
 
 import com.example.springboot.dtos.usuarioRecordDto;
 import com.example.springboot.models.usuarioModel;
-import com.example.springboot.repositories.usuarioRepository;
-
+import com.example.springboot.repositories.UsuarioRepository;
+import com.example.springboot.services.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,19 +18,35 @@ import java.util.UUID;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+
 @RestController
+@RequestMapping("api/usuarios")
+@CrossOrigin(methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE })
+
 public class usuarioController {
 
-    @Autowired
-    usuarioRepository usuarioRepository;
+    private final UsuarioService usuarioService;
 
-    @PostMapping("/usuarios")//CREATE(inserir na tabela) (metodo POST)
-    public ResponseEntity<usuarioModel> saveUsuario(@RequestBody @Valid usuarioRecordDto usuarioRecordDto){//retorno = uma model do usuario
-        var usuarioModel = new usuarioModel();//cria uma model usuario, para salvar no bd
-        BeanUtils.copyProperties(usuarioRecordDto, usuarioModel);//copia o conteúdo da dto para a model criada
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuarioModel));//insere os valores da model na tabela usuarios e retorna se a inserção ocorreu com sucesso
-        //responseentity = status = se a operação ocorreu com sucesso, body = corpo(conteudo)
+    public usuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
     }
+
+    @Autowired
+    UsuarioRepository usuarioRepository;
+
+    @PostMapping
+    public ResponseEntity<usuarioModel> saveUsuario(@RequestBody @Valid usuarioRecordDto usuarioRecordDto) {
+
+        usuarioModel savedUsuario = usuarioService.createUser(usuarioRecordDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedUsuario);
+    }
+
+//    public ResponseEntity<usuarioModel> saveUsuario(@RequestBody @Valid usuarioRecordDto usuarioRecordDto){//retorno = uma model do usuario
+//        var usuarioModel = new usuarioModel();//cria uma model usuario, para salvar no bd
+//        BeanUtils.copyProperties(usuarioRecordDto, usuarioModel);//copia o conteúdo da dto para a model criada
+//        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuarioModel));//insere os valores da model na tabela usuarios e retorna se a inserção ocorreu com sucesso
+//        //responseentity = status = se a operação ocorreu com sucesso, body = corpo(conteudo)
+//    }
 
     @GetMapping("/usuarios")//SELECT * (seleciona todos os usuarios) (metodo GET)
     public ResponseEntity<List<usuarioModel>> getAllUsuarios(){//retorna um array de usuarios (todas as tuplas da tabela)

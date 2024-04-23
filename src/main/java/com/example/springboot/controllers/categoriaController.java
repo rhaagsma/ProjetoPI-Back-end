@@ -2,7 +2,7 @@ package com.example.springboot.controllers;
 
 import com.example.springboot.dtos.categoriaRecordDto;
 import com.example.springboot.models.categoriaModel;
-import com.example.springboot.repositories.categoriaRepository;
+import com.example.springboot.repositories.CategoriaRepository;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class categoriaController {
 
     @Autowired
-    categoriaRepository categoriaRepository;
+    CategoriaRepository categoriaRepository;
 
     @PostMapping("/categorias")
     public ResponseEntity<categoriaModel> saveCategoria(@RequestBody @Valid categoriaRecordDto categoriaRecordDto){
