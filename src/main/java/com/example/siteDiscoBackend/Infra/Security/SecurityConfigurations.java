@@ -29,10 +29,21 @@ public class SecurityConfigurations {
 
 
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()//login e register, qualquer um pode realizar
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
+                        /*.requestMatchers(HttpMethod.POST, "/product").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/genre").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/band").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/category").hasRole("ADMIN")*/
+                        .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")//todas as funções create apenas o ADMIN pode realizar
+
+                        .requestMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")//todas as funções update apenas o ADMIN pode realizar
+
+                        .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")//todas as funções delete apenas o ADMIN pode realizar
+
+                        .requestMatchers(HttpMethod.GET, "/**").permitAll()//qualquer função get, qualquer um pode acessar
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)

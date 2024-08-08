@@ -23,7 +23,7 @@ public class TokenService {
             Algorithm algorithm = Algorithm.HMAC256(secret);
 
             String token = JWT.create()
-                    .withIssuer("auth-api")
+                    .withIssuer("siteDisco")
                     .withSubject(user.getLogin())
                     .withExpiresAt(generateExpirationDate())
                     .sign(algorithm);
@@ -38,7 +38,7 @@ public class TokenService {
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             return JWT.require(algorithm)
-                    .withIssuer("auth-api")
+                    .withIssuer("siteDisco")
                     .build()
                     .verify(token)
                     .getSubject();

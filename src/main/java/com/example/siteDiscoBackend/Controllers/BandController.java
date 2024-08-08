@@ -22,6 +22,8 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("band")
 
+//adicionar busca por genero?
+
 public class BandController {
     @Autowired
     private BandRepository repository;

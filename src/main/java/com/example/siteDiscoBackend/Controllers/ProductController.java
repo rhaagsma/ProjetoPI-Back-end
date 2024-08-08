@@ -22,6 +22,9 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+
+//adicionar busca por categoria e banda?
+
 @RestController
 @RequestMapping("product")
 public class ProductController {
