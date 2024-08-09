@@ -27,7 +27,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "category")
     private Set<Product> products = new HashSet<>();
 
     public Category(CategoryRequestDTO data){
