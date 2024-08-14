@@ -1,4 +1,4 @@
-package com.example.siteDiscoBackend.Infra.Security;
+package com.example.siteDiscoBackend.Services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

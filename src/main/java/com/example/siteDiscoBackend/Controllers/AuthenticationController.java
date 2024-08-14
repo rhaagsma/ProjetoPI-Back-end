@@ -1,6 +1,6 @@
 package com.example.siteDiscoBackend.Controllers;
 
-import com.example.siteDiscoBackend.Infra.Security.TokenService;
+import com.example.siteDiscoBackend.Services.TokenService;
 import com.example.siteDiscoBackend.User.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
