@@ -103,13 +103,13 @@ public class ProductController {
         Category category = categoryRepository.findById(productRequest.category())
                 .orElseThrow(() -> new RuntimeException("Category Not Found With Id: " + productRequest.category()));
 
-        var product = productFound.get();
-        BeanUtils.copyProperties(productRequest, product);
-
         Set<Band> bands = productRequest.bands().stream()
                 .map(bandId -> bandRepository.findById(bandId)
                         .orElseThrow(() -> new RuntimeException("Band not found with ID: " + bandId)))
                 .collect(Collectors.toSet());
+
+        var product = productFound.get();
+        BeanUtils.copyProperties(productRequest, product);
 
         product.setBands(bands);
         product.setCategory(category);

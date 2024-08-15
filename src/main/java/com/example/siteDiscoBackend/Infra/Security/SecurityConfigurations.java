@@ -39,13 +39,18 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/genre").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/band").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/category").hasRole("ADMIN")*/
+                        .requestMatchers(HttpMethod.POST, "/order").authenticated()
                         .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")//todas as funções create apenas o ADMIN pode realizar
 
                         .requestMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")//todas as funções update apenas o ADMIN pode realizar
 
+                        .requestMatchers(HttpMethod.PUT, "/order").authenticated()
+
                         .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")//todas as funções delete apenas o ADMIN pode realizar
 
                         .requestMatchers(HttpMethod.GET, "/auth/users").hasRole("ADMIN")
+
+                        .requestMatchers(HttpMethod.GET, "/order").authenticated()
 
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()//qualquer função get, qualquer um pode acessar
 

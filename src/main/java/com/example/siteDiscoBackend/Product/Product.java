@@ -51,4 +51,6 @@ public class Product {
         this.quantity = data.quantity();
         this.category = category;
     }
+
+
 }
