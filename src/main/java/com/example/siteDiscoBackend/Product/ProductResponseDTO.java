@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-public record ProductResponseDTO(UUID id, String name, String image, String description, float price, List<UUID> bands, UUID category) {
+public record ProductResponseDTO(UUID id, String name, String image, String description, float price, int quantity, List<UUID> bands, UUID category) {
     public ProductResponseDTO(Product product){
         this(product.getId(), product.getName(), product.getImage(), product.getDescription(), product.getPrice(), product.getQuantity(),
                 product.getBands().stream().map(Band::getId).collect(Collectors.toList()),
