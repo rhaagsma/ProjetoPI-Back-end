@@ -5,4 +5,4 @@ Anotações:
 - É necessário cadastrar a categoria de produto, antes do produto, pois um produto não pode ter categoria null
 - Função temporária de cadastrar admin (remover depois)
 
-- Adicionar pedidos
+- Relação pedidos->produtos ainda tem que ser feita
