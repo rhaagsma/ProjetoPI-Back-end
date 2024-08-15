@@ -37,6 +37,8 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/order").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/order").authenticated()
                         .requestMatchers(HttpMethod.GET, "/order").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/auth/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/auth/{id}").authenticated()
 
                         .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")//todas as funções create apenas o ADMIN pode realizar
                         .requestMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")//todas as funções update apenas o ADMIN pode realizar
