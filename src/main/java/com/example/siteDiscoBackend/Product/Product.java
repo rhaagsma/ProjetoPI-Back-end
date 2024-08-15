@@ -29,6 +29,8 @@ public class Product {
     private String description;
     private float price;
 
+    private int quantity;
+
     @ManyToMany
     @JoinTable(
             name = "product_band",
@@ -46,7 +48,7 @@ public class Product {
         this.image = data.image();
         this.description = data.description();
         this.price = data.price();
+        this.quantity = data.quantity();
         this.category = category;
     }
-
 }

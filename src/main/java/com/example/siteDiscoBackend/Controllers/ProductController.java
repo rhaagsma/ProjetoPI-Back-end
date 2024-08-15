@@ -79,6 +79,18 @@ public class ProductController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/{id}")
+    public int getQuantity(@PathVariable(value="id") UUID id){
+        Optional<Product> productFound = repository.findById(id);
+
+        if(productFound.isEmpty()){
+            return -1;
+        }
+
+        return productFound.get().getQuantity();
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateProduct(@PathVariable(value="id") UUID id,
                                               @RequestBody @Valid ProductRequestDTO productRequest){
@@ -120,4 +132,6 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Product Deleted Sucessfully!");
     }
+
+
 }
