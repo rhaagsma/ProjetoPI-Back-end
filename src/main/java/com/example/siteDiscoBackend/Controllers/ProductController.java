@@ -23,8 +23,6 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 
-//adicionar busca por categoria e banda?
-
 @RestController
 @RequestMapping("product")
 public class ProductController {
@@ -76,18 +74,6 @@ public class ProductController {
         ProductResponseDTO productResponseDTO = new ProductResponseDTO(product);
 
         return ResponseEntity.status(HttpStatus.OK).body(productResponseDTO);
-    }
-
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @GetMapping("/{id}")
-    public int getQuantity(@PathVariable(value="id") UUID id){
-        Optional<Product> productFound = repository.findById(id);
-
-        if(productFound.isEmpty()){
-            return -1;
-        }
-
-        return productFound.get().getQuantity();
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")

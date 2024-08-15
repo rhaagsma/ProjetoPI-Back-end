@@ -3,6 +3,7 @@ package com.example.siteDiscoBackend.Controllers;
 import com.example.siteDiscoBackend.Services.TokenService;
 import com.example.siteDiscoBackend.User.*;
 import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -12,8 +13,12 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("auth")
+
 public class AuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -24,6 +29,7 @@ public class AuthenticationController {
     @Autowired
     private TokenService tokenService;
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDTO data){
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
@@ -35,6 +41,7 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).body(new LoginResponseDTO(token));
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/register")
     public ResponseEntity<Object> register(@RequestBody @Valid RegisterDTO data){
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Login Already in Use");
@@ -47,6 +54,7 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).body("Sucessfully registered");
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/registerAdmin")
     public ResponseEntity<Object> registerAdmin(@RequestBody @Valid RegisterDTO data){
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Login Already in Use");
@@ -59,8 +67,36 @@ public class AuthenticationController {
         return ResponseEntity.status(HttpStatus.OK).body("Sucessfully registered");
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping("/users")
     public ResponseEntity<Object> getUsers(){
         return ResponseEntity.status(HttpStatus.OK).body(repository.findAll());
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateUser(@PathVariable(value="id") UUID id,
+                                             @RequestBody @Valid RegisterDTO data){
+        Optional<User> userFound = repository.findById(id);
+
+        if(userFound.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
+
+        var user = userFound.get();
+
+        BeanUtils.copyProperties(data, user);
+
+        return ResponseEntity.status(HttpStatus.OK).body(repository.save(user));
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> deleteUser(@PathVariable(value="id") UUID id){
+        Optional<User> userFound = repository.findById(id);
+
+        if(userFound.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
+
+        repository.delete(userFound.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body("User Deleted Sucessfully");
     }
 }
