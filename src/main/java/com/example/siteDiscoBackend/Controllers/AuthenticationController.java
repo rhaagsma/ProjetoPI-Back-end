@@ -74,6 +74,20 @@ public class AuthenticationController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/users/{id}")
+    public ResponseEntity<Object> getUser(@PathVariable(value="id") UUID id){
+        Optional<User> userFound = repository.findById(id);
+
+        if(userFound.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
+
+        UserResponseDTO userResponseDTO = new UserResponseDTO(userFound.get());
+
+        return ResponseEntity.status(HttpStatus.OK).body(userResponseDTO);
+    }
+
+
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(value="id") UUID id,
                                              @RequestBody @Valid RegisterDTO data){

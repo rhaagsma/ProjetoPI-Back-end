@@ -35,8 +35,9 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.GET, "/**").permitAll()//qualquer função get, qualquer um pode acessar
 
                         .requestMatchers(HttpMethod.POST, "/order").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/order").authenticated()
                         .requestMatchers(HttpMethod.GET, "/order").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/auth/users/id").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/order").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/auth/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/auth/{id}").authenticated()
 
