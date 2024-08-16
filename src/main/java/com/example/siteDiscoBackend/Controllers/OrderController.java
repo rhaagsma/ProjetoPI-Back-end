@@ -1,9 +1,8 @@
 package com.example.siteDiscoBackend.Controllers;
 
-import com.example.siteDiscoBackend.Order.Order;
-import com.example.siteDiscoBackend.Order.OrderRepository;
-import com.example.siteDiscoBackend.Order.OrderRequestDTO;
-import com.example.siteDiscoBackend.Order.OrderResponseDTO;
+import com.example.siteDiscoBackend.Order.*;
+import com.example.siteDiscoBackend.Product.Product;
+import com.example.siteDiscoBackend.Product.ProductRepository;
 import com.example.siteDiscoBackend.User.User;
 import com.example.siteDiscoBackend.User.UserRepository;
 import jakarta.validation.Valid;
@@ -27,12 +26,21 @@ public class OrderController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    ProductRepository productRepository;
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<Object> saveOrder(@RequestBody @Valid OrderRequestDTO data){
         User user = userRepository.findById(data.user())
                     .orElseThrow(() -> new RuntimeException("User Not Found With Id: " + data.user()));
         Order orderData = new Order(data, user);
+
+        for (OrderItemDTO orderProduct : data.items()) {
+            Product product = productRepository.findById(orderProduct.productId())
+                    .orElseThrow(() -> new RuntimeException("Product Not Found With Id: " + orderProduct.productId()));
+            orderData.addProduct(product, orderProduct.quantity());
+        }
 
         repository.save(orderData);
 
