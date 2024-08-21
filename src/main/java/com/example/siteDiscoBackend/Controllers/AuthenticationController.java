@@ -91,14 +91,16 @@ public class AuthenticationController {
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateUser(@PathVariable(value="id") UUID id,
-                                             @RequestBody @Valid RegisterDTO data){
+                                             @RequestBody @Valid AuthenticationDTO data){
         Optional<User> userFound = repository.findById(id);
 
         if(userFound.isEmpty()) return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User Not Found");
 
         var user = userFound.get();
-
         BeanUtils.copyProperties(data, user);
+
+        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+        user.setPassword(encryptedPassword);
 
         return ResponseEntity.status(HttpStatus.OK).body(repository.save(user));
     }
