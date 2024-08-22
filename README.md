@@ -6,3 +6,4 @@ Anotações:
 - Função temporária de cadastrar admin (remover depois)
 
 - Relação pedidos->produtos ainda tem que ser feita
+- Atualizar OrderItem
