@@ -1,4 +1,6 @@
 package com.example.siteDiscoBackend.User;
 
-public record RegisterDTO(String login, String password) {
+import jakarta.validation.constraints.NotNull;
+
+public record RegisterDTO(@NotNull String login, String email, String telephone, @NotNull String password) {
 }

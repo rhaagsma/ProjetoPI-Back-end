@@ -24,22 +24,26 @@ public class User implements UserDetails {
     private UUID id;
 
     private String login;
-
+    private String email;
+    private String telephone;
     private String password;
-
     private UserRole role;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Order> orders = new HashSet<>();
 
-    public User(String login, String password, UserRole role){
+    public User(String login, String password,String email, String telephone, UserRole role){
         this.login = login;
+        this.email = email;
+        this.telephone = telephone;
         this.password = password;
         this.role = role;
     }
 
-    public User(String login, String password){
+    public User(String login, String password, String email, String telephone){
         this.login = login;
+        this.email = email;
+        this.telephone = telephone;
         this.password = password;
         this.role = UserRole.CLIENT;
     }
