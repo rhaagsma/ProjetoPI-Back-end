@@ -71,6 +71,23 @@ public class OrderController {
     }
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @GetMapping("/user/{id}")
+    public ResponseEntity<Object> getUserOrders(@PathVariable(value="id") UUID id){
+        Optional<User> userFound = userRepository.findById(id);
+
+        if(userFound.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+
+        User user = userFound.get();
+        List<Order> orders = repository.findByUser(user);
+
+        List<OrderResponseDTO> orderResponseDTOS = orders.stream().map(OrderResponseDTO::new).collect(Collectors.toList());
+
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponseDTOS);
+    }
+
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateOrder(@PathVariable(value="id") UUID id,
                                               @RequestBody @Valid OrderRequestDTO orderRequest){
@@ -84,9 +101,16 @@ public class OrderController {
                 .orElseThrow(() -> new RuntimeException("User Not Found With Id: " + orderRequest.user()));
 
         var order = orderFound.get();
-        BeanUtils.copyProperties(orderRequest, order);
 
         order.setUser(user);
+
+        order.getItems().clear();
+
+        for (OrderItemDTO orderItemDTO : orderRequest.items()) {
+            Product product = productRepository.findById(orderItemDTO.productId())
+                    .orElseThrow(() -> new RuntimeException("Product Not Found With Id: " + orderItemDTO.productId()));
+            order.addProduct(product, orderItemDTO.quantity());
+        }
 
         repository.save(order);
 
@@ -95,7 +119,7 @@ public class OrderController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> findUserOrders(@PathVariable(value="id") UUID id){
+    public ResponseEntity<Object> deleteOrder(@PathVariable(value="id") UUID id){
         Optional<Order> orderFound = repository.findById(id);
 
         if(orderFound.isEmpty()){
