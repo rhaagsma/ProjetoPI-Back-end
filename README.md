@@ -6,4 +6,4 @@ Anotações:
 - Função temporária de cadastrar admin (remover depois)
 
 - Implementar e testar AddressController
-- Atualizar pedidos para ter date e total price (não precisa calcular, apenas um atributo a ser recebido pelo front
+- Atualizar pedidos para ter date e total price (não precisa calcular, apenas um atributo a ser recebido pelo front)
