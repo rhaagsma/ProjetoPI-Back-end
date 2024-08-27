@@ -5,5 +5,5 @@ Anotações:
 - É necessário cadastrar a categoria de produto, antes do produto, pois um produto não pode ter categoria null
 - Função temporária de cadastrar admin (remover depois)
 
-- Adicionar endereços
-- Atualizar pedidos para ter date e total price 
+- Implementar e testar AddressController
+- Atualizar pedidos para ter date e total price (não precisa calcular, apenas um atributo a ser recebido pelo front
