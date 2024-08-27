@@ -6,3 +6,4 @@ Anotações:
 - Função temporária de cadastrar admin (remover depois)
 
 - Adicionar endereços
+- Atualizar pedidos para ter date e total price 
