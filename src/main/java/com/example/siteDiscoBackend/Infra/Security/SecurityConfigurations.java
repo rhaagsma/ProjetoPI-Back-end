@@ -33,21 +33,26 @@ public class SecurityConfigurations {
                         .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
                         .requestMatchers(HttpMethod.POST, "/auth/registerAdmin").permitAll()
                         .requestMatchers(HttpMethod.POST, "/order").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/address").authenticated()
                         .requestMatchers(HttpMethod.POST, "/**").hasRole("ADMIN")//todas as funções create apenas o ADMIN pode realizar
 
-                        .requestMatchers(HttpMethod.GET, "/**").permitAll()//qualquer função get, qualquer um pode acessar
+                        .requestMatchers(HttpMethod.GET, "/product").permitAll()
                         .requestMatchers(HttpMethod.GET, "/order").authenticated()
                         .requestMatchers(HttpMethod.GET, "/auth/users/{id}").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/address").authenticated()
+                        .requestMatchers(HttpMethod.GET, "/address/user/{id}").authenticated()
                         .requestMatchers(HttpMethod.GET, "/auth/users").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.PUT, "/order/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/auth/{id}").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/address/{id}").authenticated()
                         .requestMatchers(HttpMethod.PUT, "/**").hasRole("ADMIN")//todas as funções update apenas o ADMIN pode realizar
 
                         .requestMatchers(HttpMethod.DELETE, "/auth/{id}").authenticated()
-                        .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")//todas as funções delete apenas o ADMIN pode realizar
                         .requestMatchers(HttpMethod.DELETE, "/order/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/address/{id}").authenticated()
                         .requestMatchers(HttpMethod.DELETE, "/auth/{id}").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/**").hasRole("ADMIN")//todas as funções delete apenas o ADMIN pode realizar
 
                         .anyRequest().authenticated()
                 )

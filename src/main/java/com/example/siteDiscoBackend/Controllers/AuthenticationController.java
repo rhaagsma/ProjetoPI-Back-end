@@ -48,7 +48,7 @@ public class AuthenticationController {
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Login Already in Use");
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.login(), data.email(), data.telephone(), encryptedPassword, UserRole.CLIENT);
+        User newUser = new User(data.login(), encryptedPassword, data.email(), data.telephone(), UserRole.CLIENT);
 
         repository.save(newUser);
 
@@ -61,7 +61,7 @@ public class AuthenticationController {
         if(this.repository.findByLogin(data.login()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Login Already in Use");
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-        User newUser = new User(data.login(), data.email(), data.telephone(), encryptedPassword, UserRole.ADMIN);
+        User newUser = new User(data.login(), encryptedPassword, data.email(), data.telephone(), UserRole.ADMIN);
 
         repository.save(newUser);
 

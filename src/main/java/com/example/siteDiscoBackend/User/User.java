@@ -36,7 +36,7 @@ public class User implements UserDetails {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
     private Set<Address> addresses = new HashSet<>();
 
-    public User(String login, String password,String email, String telephone, UserRole role){
+    public User(String login, String password, String email, String telephone, UserRole role){
         this.login = login;
         this.email = email;
         this.telephone = telephone;
