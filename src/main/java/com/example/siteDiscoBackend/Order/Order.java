@@ -5,6 +5,7 @@ import com.example.siteDiscoBackend.User.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -27,8 +28,13 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
+    private float totalPrice;
+    private LocalDateTime date;
+
     public Order(OrderRequestDTO data, User user){
         this.user = user;
+        this.totalPrice = data.totalPrice();
+        this.date = data.date();
     }
 
     public void addProduct(Product product, int quantity){
