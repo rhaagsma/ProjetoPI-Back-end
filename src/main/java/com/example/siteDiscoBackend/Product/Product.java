@@ -3,6 +3,7 @@ package com.example.siteDiscoBackend.Product;
 import com.example.siteDiscoBackend.Band.Band;
 import com.example.siteDiscoBackend.Category.Category;
 import com.example.siteDiscoBackend.Genre.Genre;
+import com.example.siteDiscoBackend.Showcase.Showcase;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,7 +29,6 @@ public class Product {
     private String image;
     private String description;
     private float price;
-
     private int quantity;
 
     @ManyToMany
@@ -42,6 +42,9 @@ public class Product {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
+
+    @ManyToMany(mappedBy = "products")
+    private Set<Showcase> inShowcases = new HashSet<>();
 
     public Product(ProductRequestDTO data, Category category){
         this.name = data.name();
