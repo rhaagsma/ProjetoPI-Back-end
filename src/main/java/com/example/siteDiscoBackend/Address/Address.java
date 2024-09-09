@@ -18,6 +18,8 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    private String name;
+
     //isso aqui ta horrivel mas to sem tempo de otimizar
 
     private String street;
@@ -34,6 +36,7 @@ public class Address {
     private User user;
 
     public Address(AddressRequestDTO data, User user){
+        this.name = data.name();
         this.street = data.street();
         this.number = data.number();
         this.city = data.city();
