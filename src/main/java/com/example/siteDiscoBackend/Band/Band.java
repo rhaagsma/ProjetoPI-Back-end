@@ -25,6 +25,8 @@ public class Band {
     private UUID id;
 
     private String name;
+    private String image;
+    private String description;
 
     @ManyToMany
     @JoinTable(
@@ -39,6 +41,7 @@ public class Band {
 
     public Band(BandRequestDTO data){
         this.name = data.name();
-
+        this.image = data.image();
+        this.description = data.description();
     }
 }
