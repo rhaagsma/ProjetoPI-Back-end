@@ -1,5 +1,6 @@
 package com.example.siteDiscoBackend.Order;
 
+import com.example.siteDiscoBackend.Address.Address;
 import com.example.siteDiscoBackend.Product.Product;
 import com.example.siteDiscoBackend.User.User;
 import jakarta.persistence.*;
@@ -28,13 +29,18 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
     private float totalPrice;
     private LocalDateTime date;
 
-    public Order(OrderRequestDTO data, User user){
+    public Order(OrderRequestDTO data, User user, Address address){
         this.user = user;
         this.totalPrice = data.totalPrice();
         this.date = data.date();
+        this.address = address;
     }
 
     public void addProduct(Product product, int quantity){

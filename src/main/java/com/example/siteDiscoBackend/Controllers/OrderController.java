@@ -1,5 +1,7 @@
 package com.example.siteDiscoBackend.Controllers;
 
+import com.example.siteDiscoBackend.Address.Address;
+import com.example.siteDiscoBackend.Address.AddressRepository;
 import com.example.siteDiscoBackend.Order.*;
 import com.example.siteDiscoBackend.Product.Product;
 import com.example.siteDiscoBackend.Product.ProductRepository;
@@ -29,12 +31,19 @@ public class OrderController {
     @Autowired
     ProductRepository productRepository;
 
+    @Autowired
+    AddressRepository addressRepository;
+
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping
     public ResponseEntity<Object> saveOrder(@RequestBody @Valid OrderRequestDTO data){
         User user = userRepository.findById(data.user())
                     .orElseThrow(() -> new RuntimeException("User Not Found With Id: " + data.user()));
-        Order orderData = new Order(data, user);
+
+        Address address = addressRepository.findById(data.address())
+                .orElseThrow(() -> new RuntimeException("Address Not Found With Id: " + data.address()));
+
+        Order orderData = new Order(data, user, address);
 
         for (OrderItemDTO orderProduct : data.items()) {
             Product product = productRepository.findById(orderProduct.productId())
@@ -100,9 +109,13 @@ public class OrderController {
         User user = userRepository.findById(orderRequest.user())
                 .orElseThrow(() -> new RuntimeException("User Not Found With Id: " + orderRequest.user()));
 
+        Address address = addressRepository.findById(orderRequest.address())
+                .orElseThrow(() -> new RuntimeException("Address Not Found With Id: " + orderRequest.address()));
+
         var order = orderFound.get();
 
         order.setUser(user);
+        order.setAddress(address);
 
         order.getItems().clear();
 
